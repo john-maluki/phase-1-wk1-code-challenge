@@ -13,7 +13,6 @@ const grade_element = document.querySelector("#grade");
 const get_mark = () => {
   const mark = Number.parseInt(mark_input.value);
   if (isNaN(mark)) {
-    console.log("Unkown");
     print_output("Unkown");
   } else {
     return mark;
@@ -40,7 +39,7 @@ const determine_grade_handler = () => {
       print_output("E");
     }
   } else {
-    print_output("Invalid");
+    print_output("Invalid Grade");
   }
 };
 
