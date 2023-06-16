@@ -10,5 +10,27 @@
     <script defer src="./static/js/challenge-two-main.js"></script>
     <script defer src="./static/js/challenge-three-main.js"></script>
   </head>
-  <body></body>
+  <body>
+    <section class="challenge-container">
+      <h1>Challenge 1: Student Grade Generator (Toy Problem)</h1>
+      <p>
+        In this challenge, we need to write a program that requests user to
+        input student marks. The input should be between 0 and 100. Then output
+        the correct grade: A > 79, B - 60 to 79, C - 59 to 49, D - 40 to 49, E -
+        less 40.
+      </p>
+      <h1>Solution</h1>
+      <div class="form-ch-1">
+        <label for="mark">Your Mark:</label>
+        <input type="text" name="mark" id="mark" placeholder="mark e.g 80" />
+        <button type="submit" id="check-grade">Check</button>
+      </div>
+      <div class="output">
+        <h3>YOUR GRADE</h3>
+        <div class="result">
+          <h1 id="grade">A</h1>
+        </div>
+      </div>
+    </section>
+  </body>
 </html>

@@ -26,6 +26,7 @@ const get_mark = () => {
 const determine_grade_handler = () => {
   const mark = get_mark();
 
+  // validate mark range
   if (mark >= 0 && mark <= 100) {
     if (mark > 79 && mark <= 100) {
       print_output("A");
