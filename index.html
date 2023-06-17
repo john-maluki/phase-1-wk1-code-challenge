@@ -11,6 +11,7 @@
     <script defer src="./static/js/challenge-three-main.js"></script>
   </head>
   <body>
+    <!-- start of challenge 1 -->
     <section class="challenge-container">
       <h1>Challenge 1: Student Grade Generator (Toy Problem)</h1>
       <p>
@@ -32,6 +33,7 @@
         </div>
       </div>
     </section>
+    <!-- start of challenge 2 -->
     <section class="challenge-container">
       <h1>Challenge 2: Speed Detector (Toy Problem)</h1>
       <p>
@@ -60,6 +62,75 @@
         <h3>YOUR SPEED POINTS</h3>
         <div class="result">
           <h1 id="speed">(***)</h1>
+        </div>
+      </div>
+    </section>
+    <!-- start of challenge 3 -->
+    <section class="challenge-container">
+      <h1>Challenge 3: Net Salary Calculator (Toy Problem)</h1>
+      <p>
+        Write a program whose major task is to calculate an individual's Net
+        Salary by getting the inputs of basic salary and benefits. Calculate the
+        payee (i.e. Tax), NHIFDeductions, NSSFDeductions, gross salary, and net
+        salary.
+      </p>
+      <p>
+        NB: Use KRA, NHIF, and NSSF values provided in the links:
+        <a href="https://www.aren.co.ke/payroll/taxrates.htm">taxrates</a> and
+        <a
+          href="https://www.kra.go.ke/en/individual/calculate-tax/calculating-tax/paye"
+          >paye</a
+        >.
+      </p>
+      <h1>Solution</h1>
+      <div class="form-ch-1 tax-1">
+        <label for="basic-salary">Basic Salary:</label>
+        <input
+          type="text"
+          name="basic-salary"
+          id="basic-salary"
+          placeholder="Basic Salary in Ksh e.g 3000"
+          required
+        />
+        <label for="contribution-benefits">Contribution Benefits:</label>
+        <input
+          type="text"
+          name="contribution-benefits"
+          id="contribution-benefits"
+          placeholder="contribution-benefits"
+          value="0"
+        />
+        <label for="personal-tax-relief">Personal Tax Relief</label>
+        <input
+          type="text"
+          name="personal-tax-relief"
+          id="personal-tax-relief"
+          value="2400"
+          disabled
+        />
+        <button type="submit" id="calcaculate-tax-button">Calculate</button>
+      </div>
+      <div class="output">
+        <h3>Individual's Net Salary</h3>
+        <div class="result tax">
+          <h1 id="gross-salary">Gross Salary: <span>(***)</span></h1>
+        </div>
+        <div class="result tax">
+          <h1 id="nhif-deduction">NHIF Deduction: <span>(***)</span></h1>
+        </div>
+        <div class="result tax">
+          <h1 id="nssf-deduction">NSSF Deduction: <span>(***)</span></h1>
+        </div>
+        <div class="result tax">
+          <h1 id="personal-tax-relief-out">
+            Personal Tax Relief: <span>(***)</span>
+          </h1>
+        </div>
+        <div class="result tax">
+          <h1 id="net-salary">Net Salary: <span>(***)</span></h1>
+        </div>
+        <div class="result tax">
+          <h1 id="paye">PAYE: <span>(***)</span></h1>
         </div>
       </div>
     </section>
