@@ -42,7 +42,7 @@ const determine_speed_handler = () => {
     if (speed_value <= 70) {
       output_speed("Ok");
     } else {
-      const point_value = Math.ceil((speed_value - 70) / 5);
+      const point_value = (speed_value - 70) / 5;
       if (point_value > 12) {
         output_speed("License suspended");
       } else {
