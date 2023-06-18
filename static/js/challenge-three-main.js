@@ -44,15 +44,12 @@ const calculate_nhif_deduction_amount = (amount) => {
     case amount <= 5999:
       nhif_amount = 150;
       break;
-
     case amount >= 6000 && amount <= 7999:
       nhif_amount = 300;
       break;
-
     case amount >= 8000 && amount <= 11999:
       nhif_amount = 400;
       break;
-
     case amount >= 12000 && amount <= 14999:
       nhif_amount = 500;
       break;
