@@ -11,3 +11,31 @@ Tax credits and reductions
         - personal relief, 
         - contributions to approved retirement funds, 
         - and medical expenses. 
+
+I use this online calculator as an exanmple for my calculations:
+    - https://calculator.co.ke/kra-paye-calculator/
+
+
+how nssf rates are calculated for the employee
+    - Any gross salary amount >= 18000 nssf amount paid is 1080
+    - Amount paid is 6% of gross salary for Tier 1 (ksh 6000)
+    - Any amount > 6000, for example, 12000. The nssf amount is calculated as follows
+        Tier 1 = 6% * 6000 = 360
+        Tier 2 = (12000 - 6000) * 6% = 360
+        Total nssf amount = 360 + 360 = 720
+    - https://www.youtube.com/watch?v=ss-W8xC4Jtc&t=12s
+    - https://www.youtube.com/watch?v=IMA0iqzDdds
+
+Insurance Relief
+    Insurance relief is granted to an employee who has paid insurance premiums for life or 
+    health or education polices for himself, his wife or child.
+
+    Relief is given at 15% of premiums paid up to a maximum of Kshs 60,000 per annum.
+    For education and health, the policy should have a maturity period of at least 10 years.
+
+    From 1st January 2022, contributions to National Hospital Insurance Fund (NHIF) qualify 
+    for insurance relief.
+
+
+Individual Income Tax Pay As You Earn (PAYE)| Rates
+    https://www.kra.go.ke/individual/filing-paying/types-of-taxes/paye

@@ -37,56 +37,56 @@ const formattedAmount = (amt) => amt.toLocaleString("en-US");
 const get_personal_tax_relief = () =>
   Number.parseInt(personal_tax_relief_input_node.value);
 
-const calculate_nhif_deduction_amount = (amount) => {
+const calculate_nhif_amount_from_gross_salary = (gross_salary) => {
   let nhif_amount;
 
   switch (true) {
-    case amount <= 5999:
+    case gross_salary <= 5999:
       nhif_amount = 150;
       break;
-    case amount >= 6000 && amount <= 7999:
+    case gross_salary >= 6000 && gross_salary <= 7999:
       nhif_amount = 300;
       break;
-    case amount >= 8000 && amount <= 11999:
+    case gross_salary >= 8000 && gross_salary <= 11999:
       nhif_amount = 400;
       break;
-    case amount >= 12000 && amount <= 14999:
+    case gross_salary >= 12000 && gross_salary <= 14999:
       nhif_amount = 500;
       break;
-    case amount >= 15000 && amount <= 19999:
+    case gross_salary >= 15000 && gross_salary <= 19999:
       nhif_amount = 600;
       break;
-    case amount >= 20000 && amount <= 24999:
+    case gross_salary >= 20000 && gross_salary <= 24999:
       nhif_amount = 750;
       break;
-    case amount >= 25000 && amount <= 29999:
+    case gross_salary >= 25000 && gross_salary <= 29999:
       nhif_amount = 850;
       break;
-    case amount >= 30000 && amount <= 34999:
+    case gross_salary >= 30000 && gross_salary <= 34999:
       nhif_amount = 900;
       break;
-    case amount >= 35000 && amount <= 39999:
+    case gross_salary >= 35000 && gross_salary <= 39999:
       nhif_amount = 950;
       break;
-    case amount >= 40000 && amount <= 44999:
+    case gross_salary >= 40000 && gross_salary <= 44999:
       nhif_amount = 1000;
       break;
-    case amount >= 45000 && amount <= 49999:
+    case gross_salary >= 45000 && gross_salary <= 49999:
       nhif_amount = 1100;
       break;
-    case amount >= 50000 && amount <= 59999:
+    case gross_salary >= 50000 && gross_salary <= 59999:
       nhif_amount = 1200;
       break;
-    case amount >= 60000 && amount <= 69999:
+    case gross_salary >= 60000 && gross_salary <= 69999:
       nhif_amount = 1300;
       break;
-    case amount >= 70000 && amount <= 79999:
+    case gross_salary >= 70000 && gross_salary <= 79999:
       nhif_amount = 1400;
       break;
-    case amount >= 80000 && amount <= 89999:
+    case gross_salary >= 80000 && gross_salary <= 89999:
       nhif_amount = 1500;
       break;
-    case amount >= 90000 && amount <= 99999:
+    case gross_salary >= 90000 && gross_salary <= 99999:
       nhif_amount = 1600;
       break;
     default:
@@ -96,7 +96,7 @@ const calculate_nhif_deduction_amount = (amount) => {
   return nhif_amount;
 };
 
-const calculate_nssf_deduction_from_gross_salary = (amount) => {
+const calculate_nssf_from_gross_salary = (amount) => {
   const nssf_rate = 0.06;
   let nssf_charged_amount = 0;
   switch (true) {
@@ -113,6 +113,12 @@ const calculate_nssf_deduction_from_gross_salary = (amount) => {
   return nssf_charged_amount;
 };
 
+const calculate_deductions = (gross_salary_amt) => {
+  // Do not use NHIF as insurable relief
+  const nssf_amt = calculate_nssf_from_gross_salary(gross_salary_amt);
+  return nssf_amt;
+};
+
 const calculate_gross_salary = () => {
   // adding basic salary and benefits allowances gives result to
   // goss salary
@@ -123,15 +129,31 @@ const calculate_gross_salary = () => {
   return gross_salary_amt;
 };
 
-const calculate_paye = () => {
-  const gross_salary_amt = calculate_gross_salary();
-  const nhif_amt = calculate_nhif_deduction_amount(gross_salary_amt);
-  const nssf_amt = calculate_nssf_deduction_from_gross_salary(gross_salary_amt);
+const calculate_taxable_income = (gross_salary_amt, deduction_amt) => {
+  // calculate taxable income
+  const taxable_income_amt = gross_salary_amt - deduction_amt;
+  return taxable_income_amt;
+};
+
+const calculate_paye = (taxable_income_amt) => {
+  // claculate pay sa you an amount
   const tax_relief_amt = get_personal_tax_relief();
 
-  const paye_amt =
-    (gross_salary_amt - (nhif_amt + nssf_amt)) * 0.3 - tax_relief_amt;
+  let paye_amt;
 
+  switch (true) {
+    case taxable_income_amt <= 24000:
+      paye_amt = taxable_income_amt * 0.1;
+      break;
+    case taxable_income_amt - 24000 <= 8333:
+      paye_amt = 2400 + (taxable_income_amt - 24000) * 0.25;
+      break;
+    default:
+      paye_amt = 2400.0 + 2083.25 + (taxable_income_amt - 32333) * 0.3;
+      break;
+  }
+
+  paye_amt -= tax_relief_amt; // substract tax relief
   if (paye_amt <= 0) {
     return 0.0;
   } else {
@@ -139,11 +161,10 @@ const calculate_paye = () => {
   }
 };
 
-const calculate_net_salary = () => {
+const calculate_net_salary = (paye_amt) => {
   const gross_salary_amt = calculate_gross_salary();
-  const nhif_amt = calculate_nhif_deduction_amount(gross_salary_amt);
-  const nssf_amt = calculate_nssf_deduction_from_gross_salary(gross_salary_amt);
-  const paye_amt = calculate_paye();
+  const nhif_amt = calculate_nhif_amount_from_gross_salary(gross_salary_amt);
+  const nssf_amt = calculate_nssf_from_gross_salary(gross_salary_amt);
 
   const net_salary_amt = gross_salary_amt - (nhif_amt + nssf_amt + paye_amt);
   return net_salary_amt;
@@ -151,10 +172,15 @@ const calculate_net_salary = () => {
 
 const calculate_all_amount_handler = () => {
   const gross_salary_amt = calculate_gross_salary();
-  const nhif_amt = calculate_nhif_deduction_amount(gross_salary_amt);
-  const nssf_amt = calculate_nssf_deduction_from_gross_salary(gross_salary_amt);
-  const paye_amt = calculate_paye();
-  const net_salary_amt = calculate_net_salary();
+  const nhif_amt = calculate_nhif_amount_from_gross_salary(gross_salary_amt);
+  const nssf_amt = calculate_nssf_from_gross_salary(gross_salary_amt);
+  const deduction_amt = calculate_deductions(gross_salary_amt);
+  const taxable_income_amt = calculate_taxable_income(
+    gross_salary_amt,
+    deduction_amt
+  );
+  const paye_amt = calculate_paye(taxable_income_amt);
+  const net_salary_amt = calculate_net_salary(paye_amt);
 
   set_element_text(gross_salary_node, formattedAmount(gross_salary_amt));
   set_element_text(nhif_deduction_node, formattedAmount(nhif_amt));
