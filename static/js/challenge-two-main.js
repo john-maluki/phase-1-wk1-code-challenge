@@ -10,20 +10,20 @@
  *  driver gets more than 12 points, the function should print: “License suspended”.`
  */
 
-const speed_input = document.querySelector("#car-speed");
-const check_speed_button = document.querySelector("#check-speed");
-const speed_element = document.querySelector("#speed");
+const speed_input_node = document.querySelector("#car-speed");
+const check_speed_button_node = document.querySelector("#check-speed");
+const speed_node = document.querySelector("#speed");
 
-const output_speed = (msg) => {
+const update_html_element_text_content = (msg) => {
   // Change the content of this element based on the vaue
   // of the input element
-  speed_element.textContent = msg;
+  speed_node.textContent = msg;
 };
 
 const get_speed_value = () => {
-  const speed_value = Number.parseInt(speed_input.value);
+  const speed_value = Number.parseInt(speed_input_node.value);
   if (isNaN(speed_value)) {
-    output_speed("Unkown");
+    update_html_element_text_content("Unkown");
   } else {
     return speed_value;
   }
@@ -37,19 +37,19 @@ const determine_speed_handler = () => {
   const speed_value = get_speed_value();
 
   if (isNaN(speed_value)) {
-    output_speed("Unkown");
+    update_html_element_text_content("Unkown");
   } else {
     if (speed_value <= 70) {
-      output_speed("Ok");
+      update_html_element_text_content("Ok");
     } else {
       const point_value = (speed_value - 70) / 5;
       if (point_value > 12) {
-        output_speed("License suspended");
+        update_html_element_text_content("License suspended");
       } else {
-        output_speed(`Points: ${point_value}`);
+        update_html_element_text_content(`Points: ${point_value}`);
       }
     }
   }
 };
 
-check_speed_button.addEventListener("click", determine_speed_handler);
+check_speed_button_node.addEventListener("click", determine_speed_handler);

@@ -6,12 +6,12 @@
  * A > 79, B - 60 to 79, C - 59 to 49, D - 40 to 49, E - less 40.
  */
 
-const mark_input = document.querySelector("#mark");
-const check_grade_button = document.querySelector("#check-grade");
-const grade_element = document.querySelector("#grade");
+const mark_input_node = document.querySelector("#mark");
+const check_grade_button_node = document.querySelector("#check-grade");
+const grade_node = document.querySelector("#grade");
 
 const get_mark = () => {
-  const mark = Number.parseInt(mark_input.value);
+  const mark = Number.parseInt(mark_input_node.value);
   if (isNaN(mark)) {
     print_output("Unkown");
   } else {
@@ -46,7 +46,7 @@ const determine_grade_handler = () => {
 const print_output = (msg) => {
   // Change the content of this element based on the vaue
   // of the input element
-  grade_element.textContent = msg;
+  grade_node.textContent = msg;
 };
 
-check_grade_button.addEventListener("click", determine_grade_handler);
+check_grade_button_node.addEventListener("click", determine_grade_handler);

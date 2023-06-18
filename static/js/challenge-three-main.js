@@ -9,29 +9,33 @@
  * https://www.aren.co.ke/payroll/taxrates.htm
  * https://www.kra.go.ke/en/individual/calculate-tax/calculating-tax/paye
  */
-const basic_salary = document.querySelector("#basic-salary");
-const contribution_benefits = document.querySelector("#contribution-benefits");
-const personal_tax_relief = document.querySelector("#personal-tax-relief");
+const basic_salary_node = document.querySelector("#basic-salary");
+const contribution_benefits_node = document.querySelector(
+  "#contribution-benefits"
+);
+const personal_tax_relief_input_node = document.querySelector(
+  "#personal-tax-relief"
+);
 
-const gross_salary = document.querySelector("#gross-salary");
-const nhif_deduction = document.querySelector("#nhif-deduction");
-const nssf_deduction = document.querySelector("#nssf-deduction");
-const personal_tax_relief_out = document.querySelector(
+const gross_salary_node = document.querySelector("#gross-salary");
+const nhif_deduction_node = document.querySelector("#nhif-deduction");
+const nssf_deduction_node = document.querySelector("#nssf-deduction");
+const personal_tax_relief_node = document.querySelector(
   "#personal-tax-relief-out"
 );
-const net_salary = document.querySelector("#net-salary");
-const paye = document.querySelector("#paye");
-const calcaculate_tax_button = document.querySelector(
-  "#calcaculate-tax-button"
-);
+const net_salary_node = document.querySelector("#net-salary");
+const paye_node = document.querySelector("#paye");
+const tax_button_node = document.querySelector("#calcaculate-tax-button");
 
 const set_element_text = (element, msg) => {
   span = element.querySelector("span");
   span.textContent = msg;
 };
 
+const formattedAmount = (amt) => amt.toLocaleString("en-US");
+
 const get_personal_tax_relief = () =>
-  Number.parseInt(personal_tax_relief.value);
+  Number.parseInt(personal_tax_relief_input_node.value);
 
 const calculate_nhif_deduction_amount = (amount) => {
   let nhif_amount;
@@ -103,8 +107,8 @@ const calculate_gross_salary = () => {
   // adding basic salary and benefits allowances gives result to
   // goss salary
   const gross_salary_amt =
-    Number.parseInt(basic_salary.value) +
-    Number.parseInt(contribution_benefits.value);
+    Number.parseInt(basic_salary_node.value) +
+    Number.parseInt(contribution_benefits_node.value);
 
   return gross_salary_amt;
 };
@@ -142,19 +146,19 @@ const calculate_all_amount_handler = () => {
   const paye_amt = calculate_paye();
   const net_salary_amt = calculate_net_salary();
 
-  set_element_text(gross_salary, gross_salary_amt);
-  set_element_text(nhif_deduction, nhif_amt);
-  set_element_text(nssf_deduction, nssf_amt);
-  set_element_text(paye, paye_amt);
-  set_element_text(net_salary, net_salary_amt);
+  set_element_text(gross_salary_node, formattedAmount(gross_salary_amt));
+  set_element_text(nhif_deduction_node, formattedAmount(nhif_amt));
+  set_element_text(nssf_deduction_node, formattedAmount(nssf_amt));
+  set_element_text(paye_node, formattedAmount(paye_amt));
+  set_element_text(net_salary_node, formattedAmount(net_salary_amt));
 };
 
 const init = () => {
   // initialize span nested in h1 because the amount is constant
   // and known
-  set_element_text(personal_tax_relief_out, get_personal_tax_relief());
+  set_element_text(personal_tax_relief_node, get_personal_tax_relief());
 };
 
-calcaculate_tax_button.addEventListener("click", calculate_all_amount_handler);
+tax_button_node.addEventListener("click", calculate_all_amount_handler);
 
 window.onload = init;
