@@ -99,8 +99,21 @@ const calculate_nhif_deduction_amount = (amount) => {
   return nhif_amount;
 };
 
-const calculate_nssf_deduction_amount = () => {
-  return 200;
+const calculate_nssf_deduction_from_gross_salary = (amount) => {
+  const nssf_rate = 0.06;
+  let nssf_charged_amount = 0;
+  switch (true) {
+    case amount <= 6000:
+      nssf_charged_amount = amount * nssf_rate;
+      break;
+    case amount > 6000 && amount <= 18000:
+      nssf_charged_amount = (amount - 6000) * nssf_rate + 360;
+      break;
+    default:
+      nssf_charged_amount = 1080;
+  }
+
+  return nssf_charged_amount;
 };
 
 const calculate_gross_salary = () => {
@@ -116,7 +129,7 @@ const calculate_gross_salary = () => {
 const calculate_paye = () => {
   const gross_salary_amt = calculate_gross_salary();
   const nhif_amt = calculate_nhif_deduction_amount(gross_salary_amt);
-  const nssf_amt = calculate_nssf_deduction_amount();
+  const nssf_amt = calculate_nssf_deduction_from_gross_salary(gross_salary_amt);
   const tax_relief_amt = get_personal_tax_relief();
 
   const paye_amt =
@@ -132,7 +145,7 @@ const calculate_paye = () => {
 const calculate_net_salary = () => {
   const gross_salary_amt = calculate_gross_salary();
   const nhif_amt = calculate_nhif_deduction_amount(gross_salary_amt);
-  const nssf_amt = calculate_nssf_deduction_amount();
+  const nssf_amt = calculate_nssf_deduction_from_gross_salary(gross_salary_amt);
   const paye_amt = calculate_paye();
 
   const net_salary_amt = gross_salary_amt - (nhif_amt + nssf_amt + paye_amt);
@@ -142,7 +155,7 @@ const calculate_net_salary = () => {
 const calculate_all_amount_handler = () => {
   const gross_salary_amt = calculate_gross_salary();
   const nhif_amt = calculate_nhif_deduction_amount(gross_salary_amt);
-  const nssf_amt = calculate_nssf_deduction_amount();
+  const nssf_amt = calculate_nssf_deduction_from_gross_salary(gross_salary_amt);
   const paye_amt = calculate_paye();
   const net_salary_amt = calculate_net_salary();
 
